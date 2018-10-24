@@ -20,14 +20,19 @@
 
 ![avatar](https://github.com/wenxingsen/tracker/blob/master/images/demo1.jpg)
 
-**生成跟踪模板帧图像**
+**生成跟踪 模板帧图像**
 ![avatar](https://github.com/wenxingsen/tracker/blob/master/images/img1.jpg)
-**生成跟踪模板帧图像标签**
+**生成跟踪 模板帧box**
 ![avatar](https://github.com/wenxingsen/tracker/blob/master/images/img1_box.jpg)
 
-**生成跟踪预测帧图像**
+**生成跟踪 预测帧图像**
 ![avatar](https://github.com/wenxingsen/tracker/blob/master/images/img2.jpg)
-**生成跟踪预测帧图像标签**
+**生成跟踪预测帧box**
 ![avatar](https://github.com/wenxingsen/tracker/blob/master/images/img2_box.jpg)
 
+
+### 网络拓扑
+网络的输入：模板帧图像，模板帧box，预测帧图像  
+网络的输出：预测帧box  
+![avatar](https://github.com/wenxingsen/tracker/blob/master/images/trakernet.jpg)
 
