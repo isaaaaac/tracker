@@ -20,14 +20,14 @@
 
 ![avatar](https://github.com/wenxingsen/tracker/blob/master/images/demo1.jpg)
 
-生成跟踪模板帧图像
+**生成跟踪模板帧图像**
 ![avatar](https://github.com/wenxingsen/tracker/blob/master/images/img1.jpg)
-生成跟踪模板帧图像标签
+**生成跟踪模板帧图像标签**
 ![avatar](https://github.com/wenxingsen/tracker/blob/master/images/img1_box.jpg)
 
-生成跟踪预测帧图像
+**生成跟踪预测帧图像**
 ![avatar](https://github.com/wenxingsen/tracker/blob/master/images/img2.jpg)
-生成跟踪预测帧图像标签
+**生成跟踪预测帧图像标签**
 ![avatar](https://github.com/wenxingsen/tracker/blob/master/images/img2_box.jpg)
 
 
