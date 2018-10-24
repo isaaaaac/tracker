@@ -15,3 +15,5 @@
 随机从背景库里面挑选一张背景，随机从前景目标库里面挑选一张前景，
 通过随机生成一个xy坐标，前景和背景融合起来，然后随机产生xy的一定距离偏差，（后期加一些形变），
 重新生成前景和背景融合的图片，与此同时，同时生成黑框。
+
+![avatar](https://github.com/wenxingsen/tracker/blob/master/images/demo1.jpg)
