@@ -1,5 +1,4 @@
 # tracker
-[TOC]
 森哥目标追踪
 
 ## 目标跟踪生成示意图第一版  
@@ -20,3 +19,15 @@
 重新生成前景和背景融合的图片，与此同时，同时生成黑框。
 
 ![avatar](https://github.com/wenxingsen/tracker/blob/master/images/demo1.jpg)
+
+生成跟踪模板帧图像
+![avatar](https://github.com/wenxingsen/tracker/blob/master/images/img1.jpg)
+生成跟踪模板帧图像标签
+![avatar](https://github.com/wenxingsen/tracker/blob/master/images/img1_box.jpg)
+
+生成跟踪预测帧图像
+![avatar](https://github.com/wenxingsen/tracker/blob/master/images/img2.jpg)
+生成跟踪预测帧图像标签
+![avatar](https://github.com/wenxingsen/tracker/blob/master/images/img2_box.jpg)
+
+
