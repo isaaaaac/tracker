@@ -31,7 +31,7 @@
 ![avatar](https://github.com/wenxingsen/tracker/blob/master/images/img2_box.jpg)
 
 ### 前景和背景加上一定的抖动
-![avatar](https://github.com/wenxingsen/tracker/blob/master/images/trakernet.jpg)
+![avatar](https://github.com/wenxingsen/tracker/blob/master/images/generate.gif)
 
 ### 网络拓扑
 网络的输入：模板帧图像，模板帧box，预测帧图像  
