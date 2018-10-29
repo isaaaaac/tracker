@@ -38,3 +38,10 @@
 网络的输出：预测帧box  
 ![avatar](https://github.com/wenxingsen/tracker/blob/master/images/trakernet.jpg)
 
+
+### 预测效果图
+预测的图
+![avatar](https://github.com/wenxingsen/tracker/blob/master/images/pillow_img.jpg)
+
+预测的效果图
+![avatar](https://github.com/wenxingsen/tracker/blob/master/images/pillow_box.jpg)
