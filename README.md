@@ -40,8 +40,8 @@
 
 
 ### 预测效果图
-预测的图
+追踪的图
 ![avatar](https://github.com/wenxingsen/tracker/blob/master/images/pillow_img.jpg)
 
-预测的效果图
+追踪的预测图
 ![avatar](https://github.com/wenxingsen/tracker/blob/master/images/pillow_box.jpg)
