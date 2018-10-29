@@ -115,7 +115,7 @@ class SiameseNet:
         with tf.variable_scope('scala1'):
             print("Building conv1, bn1, relu1, pooling1...")
             name = tf.get_variable_scope().name
-            # outputs = conv1(inputs, 3, 96, 11, 2)
+            
             outputs = self.conv(inputs, 96, 11, 2, 1, [1.0, 2.0], [1.0, 0.0], opts['trainWeightDecay'], opts['stddev'])
             outputs = self.batchNorm(outputs, isTrainingOp) #batchNormalization(outputs, isTrainingOp, name)
             outputs = tf.nn.relu(outputs)
@@ -124,7 +124,7 @@ class SiameseNet:
         with tf.variable_scope('scala2'):
             print("Building conv2, bn2, relu2, pooling2...")
             name = tf.get_variable_scope().name
-            # outputs = conv2(outputs, 48, 256, 5, 1)
+            
             outputs = self.conv(outputs, 256, 5, 1, 1, [1.0, 2.0], [1.0, 0.0], opts['trainWeightDecay'], opts['stddev'])
             outputs = self.batchNorm(outputs, isTrainingOp)
             outputs = tf.nn.relu(outputs)
@@ -133,7 +133,7 @@ class SiameseNet:
         with tf.variable_scope('scala3'):
             print("Building conv3, bn3, relu3...")
             name = tf.get_variable_scope().name
-            # outputs = conv1(outputs, 256, 384, 3, 1)
+            
             outputs = self.conv(outputs, 384, 3, 1, 1, [1.0, 2.0], [1.0, 0.0], opts['trainWeightDecay'], opts['stddev'])
             outputs = self.batchNorm(outputs, isTrainingOp)
             outputs = tf.nn.relu(outputs)
@@ -141,14 +141,14 @@ class SiameseNet:
         with tf.variable_scope('scala4'):
             print("Building conv4, bn4, relu4...")
             name = tf.get_variable_scope().name
-            # outputs = conv2(outputs, 192, 384, 3, 1)
+            
             outputs = self.conv(outputs, 384, 3, 1, 1, [1.0, 2.0], [1.0, 0.0], opts['trainWeightDecay'], opts['stddev'])
             outputs = self.batchNorm(outputs, isTrainingOp)
             outputs = tf.nn.relu(outputs)
 
         with tf.variable_scope('scala5'):
             print("Building conv5...")
-            # outputs = conv2(outputs, 192, 256, 3, 1)
+            
             outputs = self.conv(outputs, 256, 3, 1, 1, [1.0, 2.0], [1.0, 0.0], opts['trainWeightDecay'], opts['stddev'], name=branchName)
 
         return outputs
@@ -159,7 +159,7 @@ class SiameseNet:
         with tf.variable_scope('scala1'):
             print("Building conv1, bn1, relu1, pooling1...")
             name = tf.get_variable_scope().name
-            # outputs = conv1(inputs, 3, 96, 11, 2)
+            
             outputs = self.conv(inputs, 96, 11, 2, 1, [1.0, 2.0], [1.0, 0.0], opts['trainWeightDecay'], opts['stddev'])
             outputs = self.batchNorm(outputs, isTrainingOp)
             outputs = tf.nn.relu(outputs)
@@ -168,7 +168,7 @@ class SiameseNet:
         with tf.variable_scope('scala2'):
             print("Building conv2, bn2, relu2, pooling2...")
             name = tf.get_variable_scope().name
-            # outputs = conv2(outputs, 48, 256, 5, 1)
+            
             outputs = self.conv(outputs, 256, 5, 1, 2, [1.0, 2.0], [1.0, 0.0], opts['trainWeightDecay'], opts['stddev'])
             outputs = self.batchNorm(outputs, isTrainingOp)
             outputs = tf.nn.relu(outputs)
@@ -177,7 +177,7 @@ class SiameseNet:
         with tf.variable_scope('scala3'):
             print("Building conv3, bn3, relu3...")
             name = tf.get_variable_scope().name
-            # outputs = conv1(outputs, 256, 384, 3, 1)
+            
             outputs = self.conv(outputs, 384, 3, 1, 1, [1.0, 2.0], [1.0, 0.0], opts['trainWeightDecay'], opts['stddev'])
             outputs = self.batchNorm(outputs, isTrainingOp)
             outputs = tf.nn.relu(outputs)
@@ -185,7 +185,7 @@ class SiameseNet:
         with tf.variable_scope('scala4'):
             print("Building conv4, bn4, relu4...")
             name = tf.get_variable_scope().name
-            # outputs = conv2(outputs, 192, 384, 3, 1)
+            
             outputs = self.conv(outputs, 384, 3, 1, 2, [1.0, 2.0], [1.0, 0.0], opts['trainWeightDecay'], opts['stddev'])
             outputs = self.batchNorm(outputs, isTrainingOp)
             outputs = tf.nn.relu(outputs)
@@ -289,124 +289,3 @@ class SiameseNet:
             regularizer = None
 
         return tf.get_variable(name, shape=shape, initializer=initializer, dtype=dType, regularizer=regularizer, trainable=trainable)
-
-# deprecated
-def conv1(inputs, channels, filters, size, stride):
-    # initializations include trancated norm distribution method and xavier method, the matlab version exploits an improved xavier method.
-    # However I didn't find it in tf, so xavier is used here, if not work, something may need change here!!
-    weights = tf.get_variable('weights', [size, size, channels, filters],
-                              initializer=tf.contrib.layers.xavier_initializer(), dtype=tf.float32)
-    biases = tf.get_variable('biases', [filters, ],
-                             initializer=tf.constant_initializer(value=0.1, dtype=tf.float32))
-
-    conv = tf.nn.conv2d(inputs, weights, strides=[1, stride, stride, 1], padding='VALID')
-    conv = tf.add(conv, biases)
-    print('Layer Type = Conv, Size = %d * %d, Stride = %d, Filters = %d, Input channels = %d' % (
-        size, size, stride, filters, channels))
-
-    return conv
-
-    # deprecated
-def conv2(inputs, channels, filters, size, stride):
-    inputShape = inputs.get_shape()
-
-    inputs0 = tf.slice(inputs, [0, 0, 0, 0], [inputShape[0], inputShape[1], inputShape[2], channels])
-    inputs1 = tf.slice(inputs, [0, 0, 0, channels], [inputShape[0], inputShape[1], inputShape[2], channels])
-
-    weights0 = tf.get_variable('weights0', [size, size, channels, filters / 2],
-                               initializer=tf.contrib.layers.xavier_initializer_conv2d(), dtype=tf.float32)
-    weights1 = tf.get_variable('weights1', [size, size, channels, filters / 2],
-                               initializer=tf.contrib.layers.xavier_initializer_conv2d(), dtype=tf.float32)
-
-    conv0 = tf.nn.conv2d(inputs0, weights0, strides=[1, stride, stride, 1])
-    conv1 = tf.nn.conv2d(inputs1, weights1, strides=[1, stride, stride, 1])
-    conv = tf.concat([conv0, conv1], 3)
-
-    biases = tf.get_variable('biases', [filters, ],
-                             initializer=tf.constant_initializer(value=0.1, dtype=tf.float32))
-    conv = tf.add(conv, biases)
-    print('Layer Type = Conv, Size = %d * %d, Stride = %d, Filters = %d, Input channels = %d' % (
-        size, size, stride, filters, channels))
-
-    return conv
-
-
-
-
-
-            # def batchNormalization(inputs, isTraining):
-    #     xShape = inputs.get_shape()
-    #     paramsShape = xShape[-1:]
-    #     axis = list(range(len(xShape)-1))
-    #
-    #     beta = tf.get_variable('beta', paramsShape, initializer=tf.constant_initializer(value=0, dtype=tf.float32))
-    #     gamma = tf.get_variable('gamma', paramsShape, initializer=tf.constant_initializer(value=1, dtype=tf.float32))
-    #     movingMean = tf.get_variable('moving_mean', paramsShape, initializer=tf.constant_initializer(value=0, dtype=tf.float32), trainable=False)
-    #     movingVariance = tf.get_variable('moving_variance', paramsShape, initializer=tf.constant_initializer(value=1, dtype=tf.float32), trainable=False)
-    #
-    #     mean, variance = tf.nn.moments(inputs, axis)
-    #     updateMovingMean = moving_averages.assign_moving_average(movingMean, mean, MOVING_AVERAGE_DECAY)
-    #     updateMovingVariance = moving_averages.assign_moving_average(movingVariance, variance, MOVING_AVERAGE_DECAY)
-    #     tf.add_to_collection(UPDATE_OPS_COLLECTION, updateMovingMean)
-    #     tf.add_to_collection(UPDATE_OPS_COLLECTION, updateMovingVariance)
-    #
-    #     mean, variance = control_flow_ops.cond(isTraining, lambda: (mean, variance), lambda: (movingMean, movingVariance))
-    #
-    #     bn = tf.nn.batch_normalization(inputs, mean, variance, beta, gamma, 0.0001)
-    #     print('Layer type = batch_norm')
-    #
-    #     return bn
-
-
-    # groupConv = lambda i, k: tf.nn.conv2d(i, k, strides=[1, 1, 1, 1], padding='VALID')
-    #
-    # batchAFeat = int(aFeat.get_shape()[-1])
-    # batchScore = int(score.get_shape()[0])
-    # if batchAFeat > 1:
-    #     assert batchAFeat == params['trainBatchSize']
-    #     assert batchScore == params['trainBatchSize']
-    #
-    #     aFeats = tf.split(axis=3, num_or_size_splits=batchAFeat, value=aFeat)
-    #     scores = tf.split(axis=0, num_or_size_splits=batchScore, value=score)
-    #     scores = [groupConv(i, k) for i, k in zip(scores, aFeats)]
-    #
-    #     score = tf.concat(axis=3, values=scores)
-    #     score = tf.transpose(score, perm=[3, 1, 2, 0])
-    # else:
-    #     assert batchAFeat == 1
-    #     assert batchScore == params['numScale']
-    #
-    #     scores = tf.split(axis=0, num_or_size_splits=batchScore, value=score)
-    #     for i in range(batchScore):
-    #         scores1 = []
-    #         scores1.append(tf.nn.conv2d(scores[i], aFeat, strides=[1, 1, 1, 1], padding='VALID'))
-    #
-    #     score = tf.concat(axis=0, values=scores1)
-
-
-    # shapeAFeat = aFeat.get_shape()
-    # aFeat0 = tf.slice(aFeat, [0, 0, 0, 0], [shapeAFeat[0], shapeAFeat[1], shapeAFeat[2], 1])
-    # aFeat1 = tf.slice(aFeat, [0, 0, 0, 1], [shapeAFeat[0], shapeAFeat[1], shapeAFeat[2], 1])
-    # aFeat2 = tf.slice(aFeat, [0, 0, 0, 2], [shapeAFeat[0], shapeAFeat[1], shapeAFeat[2], 1])
-    #
-    # shapeScore = score.get_shape()
-    # score0 = tf.slice(score, [0, 0, 0, 0], [1, shapeScore[1], shapeScore[2], shapeScore[3]])
-    # score1 = tf.slice(score, [1, 0, 0, 0], [1, shapeScore[1], shapeScore[2], shapeScore[3]])
-    # score2 = tf.slice(score, [2, 0, 0, 0], [1, shapeScore[1], shapeScore[2], shapeScore[3]])
-    #
-    # score0 = tf.nn.conv2d(score0, aFeat0, strides=[1, 1, 1, 1])
-    # score1 = tf.nn.conv2d(score1, aFeat0, strides=[1, 1, 1, 1])
-    # score2 = tf.nn.conv2d(score2, aFeat0, strides=[1, 1, 1, 1])
-    #
-    # score = tf.concat([score0, score1, score2], 0)
-
-# def inference(_instance):
-#     # input of network z
-#     exemplar = tf.placeholder('float32', [None, 127, 127, 3])
-#     # input of network x
-#     a_feat = tf.placeholder('float32', [None, 6, 6, 256])
-#     instance = tf.placeholder('float32', [None, 255, 255, 3])
-#     # self.score = tf.placeholder('float32', [None, 17, 17, 1])
-#
-# def train(params):
-#     return

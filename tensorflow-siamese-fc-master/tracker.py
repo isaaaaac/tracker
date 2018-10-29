@@ -1,12 +1,9 @@
-# Suofei ZHANG, 2017.
+# -*- coding: utf-8 -*-
 
 import os
 import tensorflow as tf
 import numpy as np
 import glob
-# import matplotlib.image as mpimg
-# from PIL import Image
-# from skimage import transform
 import cv2
 import scipy.io as sio
 import time
@@ -18,17 +15,25 @@ from parameters import configParams
 def getOpts(opts):
     print("config opts...")
 
+    # 三个尺寸变化 分别是0.9745, 1, 1.0375 
     opts['numScale'] = 3
     opts['scaleStep'] = 1.0375
     opts['scalePenalty'] = 0.9745
-    # opts['scalePenalty'] = 1/0.9745
+    
     opts['scaleLr'] = 0.59
     opts['responseUp'] = 16
     opts['windowing'] = 'cosine'
     opts['wInfluence'] = 0.176
+    
+    
+    # 模板的尺寸
     opts['exemplarSize'] = 127
+    # 需要的图片的尺寸
     opts['instanceSize'] = 255
+    # 成绩的map图
     opts['scoreSize'] = 17
+    
+    
     opts['totalStride'] = 8
     opts['contextAmount'] = 0.5
     opts['trainWeightDecay'] = 5e-04
@@ -247,13 +252,19 @@ def main(_):
     opts = configParams()
     opts = getOpts(opts)
 
+    # 模板帧
     exemplarOp = tf.placeholder(tf.float32, [1, opts['exemplarSize'], opts['exemplarSize'], 3])
+    # 预测帧
     instanceOp = tf.placeholder(tf.float32, [opts['numScale'], opts['instanceSize'], opts['instanceSize'], 3])
+    
     exemplarOpBak = tf.placeholder(tf.float32, [opts['trainBatchSize'], opts['exemplarSize'], opts['exemplarSize'], 3])
     instanceOpBak = tf.placeholder(tf.float32, [opts['trainBatchSize'], opts['instanceSize'], opts['instanceSize'], 3])
+    # 是否是训练
     isTrainingOp = tf.convert_to_tensor(False, dtype='bool', name='is_training')
 
+    # 网络初始化
     sn = SiameseNet()
+    # 构建网络
     scoreOpBak = sn.buildTrainNetwork(exemplarOpBak, instanceOpBak, opts, isTraining=False)
     saver = tf.train.Saver()
     writer = tf.summary.FileWriter(opts['summaryFile'])
@@ -265,7 +276,8 @@ def main(_):
     nImgs = len(imgs)
     startFrame = 0
     
-
+    print("fuck")
+    exit()
 
     im = imgs[startFrame]
     if(im.shape[-1] == 1):
